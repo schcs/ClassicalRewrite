@@ -102,7 +102,7 @@ DiagonalElement := function( type, dim, q )
         
         return pr^Round((q-1)/GCD( dim, q-1 ));
         
-    elif type eq "Sp" then
+    elif type eq "Sp" and IsOdd( q ) then
         
         p := B.2;
         pd := B.4; pr := pd;
@@ -111,8 +111,11 @@ DiagonalElement := function( type, dim, q )
             pd := pd^p;
             pr := pr*pd;
         end for;
-        
         return pr^Round((q-1)/2);
+        
+    elif type eq "Sp" and IsEven( q ) then
+        
+        return One( B );
         
     elif type eq "SU" and IsEven( dim ) then
 
@@ -144,6 +147,14 @@ DiagonalElement := function( type, dim, q )
         
         return progZ;
         
+    elif type eq "Omega+" and IsEven( q ) then
+        
+        return One( B );
+        
+    elif type eq "Omega+" and IsOdd( q ) and IsOdd( dim*(q-1) div 4 ) then
+        
+        return One( B );
+               
     elif type eq "Omega+" and dim mod 4 eq 2 then
         
         progZ := One( B );
@@ -167,7 +178,15 @@ DiagonalElement := function( type, dim, q )
         end for;
         
         return progZ;
-                
+        
+    elif type eq "Omega-" and IsEven( q ) then
+        
+        return One( B );
+        
+    elif type eq "Omega-" and IsOdd( q ) and IsEven( dim*(q-1) div 4 ) then
+        
+        return One( B );
+        
     elif type eq "Omega-" then
         
         progZ := One( B );

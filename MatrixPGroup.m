@@ -1,7 +1,8 @@
 freeze;
 
-import "../../../../GrpPC/pgrps/unipotent.m": GetPFlagWithCache, PChiefSeriesGeneratorsWithCache;
+// import "../../../../GrpPC/pgrps/unipotent.m": GetPFlagWithCache, PChiefSeriesGeneratorsWithCache;
 
+import "unipotent.m": GetPFlagWithCache, PChiefSeriesGeneratorsWithCache;
 
 FindPower := function(s, Y, weight)
 

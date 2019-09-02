@@ -298,7 +298,7 @@ end procedure;
        if CheckMembership then
          g0 := tr*MatrixAlgebra( F, dim )!g*tr^-1;
          if Determinant( g0 ) ne 1 then 
-             return false, _; 
+             return false, false; 
          end if;
          
          mat := ClassicalStandardForm( type, dim, #F ); 
@@ -316,17 +316,17 @@ end procedure;
          newmat := g0*mat*g01; 
          
          if type in { "Sp", "SU" } and newmat ne mat then 
-             return false, _;
+             return false, false;
          elif type in { "Omega", "Omega+", "Omega-" } then
              
              if mat + Transpose( mat ) ne newmat + Transpose( newmat ) 
                 then
-                 return false, _;
+                 return false, false;
              end if;
                             
              if Characteristic( F ) ne 2 and 
                 SpinorNorm( gl!g0, mat ) ne 0 then
-                 return false, _;
+                 return false, false;
              end if;
              
          end if;
@@ -379,7 +379,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
     requirege dim, 2;
     requirege q, 2;
     require IsPrimePower( q ): "the field size should be a prime-power";
-    
+
     mem := GetMaximumMemoryUsage();
     q2 := case< type | "SU": q^2, default: q >;
      
@@ -437,7 +437,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
              BB := BBGroup( G );
              return v, Evaluate2( p, [ BB.1, BB.1, BB.3, BB.4]);
          else
-             return false, _;
+             return false, false;
          end if;
          
      // SU( 2, q ) isom SL( 2, q )    
@@ -452,7 +452,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
              BB := BBGroup( G );
              return v, Evaluate2( p, [ BB.1, BB.1, BB.3, BB.4]);
          else
-             return false, _;
+             return false, false;
          end if;  
      
      // Omega( 3, q ) isom SL( 2, q )
@@ -467,7 +467,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
              BB := BBGroup( G );
              return v, Evaluate2( p, [ BB.1, BB.1, BB.2, BB.3]);
          else
-             return false, _;
+             return false, false;
          end if;  
          
      //    Omega-(4,q) isom SL(2,q^2)
@@ -482,7 +482,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
              BB := BBGroup( G );
              return v, Evaluate2( p, [ BB.1, BB.1, BB.2, BB.3]);
          else
-             return false, _;
+             return false, false;
          end if;  
          
      elif type eq "Omega-" and dim eq 4 and IsEven( q ) and Method eq "BB" then
@@ -498,7 +498,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
              return v, Evaluate2( p, [ BB.2*BB.1*BB.2, BB.2*BB.1*BB.2, 
                             BB.1, BB.3]);
          else
-             return false, _;
+             return false, false;
          end if;  
          
          // Omega+(4,q) isom SL(2,q) Y SL(2,q)
@@ -513,14 +513,14 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
           
           v1, p1 := ClassicalRewrite( newG1, newgens1, "SL", 2, q, g );
           if not assigned p1 or Category( p1 ) eq BoolElt then
-              return false, _;
+              return false, false;
           end if;
           
           g1 := Evaluate( p1, newgens1 );
           
           v2, p2 := ClassicalRewrite( newG2, newgens2, "SL", 2, q, g1*g^-1 );
           if not assigned p2 or Category( p2 ) eq BoolElt then
-              return false, _;
+              return false, false;
           end if;
           
           BB := BBGroup( G );
@@ -576,36 +576,36 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
                                  Method := Method, 
                                  FirstCall := true ); 
 
-   if Category( pr1l ) eq BoolElt then return false, _; end if;
+   if Category( pr1l ) eq BoolElt then return false, false; end if;
    g := xl*g*xr;
 
    if type eq "SL" then
 
        pr2l, pr2r, el1, el2 := ClearFirstRow( G, g : Method := Method, 
                                        Transpose := true );
-       if Category( pr2l ) eq BoolElt then return false, _; end if;
+       if Category( pr2l ) eq BoolElt then return false, false; end if;
        g := el1*g*el2; 
        
    else
        
        g := g^S1; 
        pr2l, pr2r, el1, el2 := ClearFirstRow( G, g : Method := Method );
-       if Category( pr2l ) eq BoolElt then return false, _; end if;
+       if Category( pr2l ) eq BoolElt then return false, false; end if;
        pr2l := pr2l*progS1^-1; pr2r := progS1*pr2r;
        g := el1*g*el2; 
    end if;
 
    pr3, pr4, el := SmallerMatrix( G, g : Method := Method ); 
 
-   if Category( pr3 ) eq BoolElt then return false, _; end if;
+   if Category( pr3 ) eq BoolElt then return false, false; end if;
    g := el*g*Evaluate2( pr3, gens )^-1;
-   
+
    // in most of the cases we are finished at this point. The 
    // next function only has effect for some small dimensional 
    // black-box cases.  
    
    pr5, el := DiagonalElementToSLP( G, g : Method := Method );
-   if Category( pr5 ) eq BoolElt then return false, _; end if; 
+   if Category( pr5 ) eq BoolElt then return false, false; end if; 
    g := g*el; 
 
    p := pr1l^-1*pr2l^-1*pr4^-1*pr5^-1*pr3*pr2r^-1*pr1r^-1;

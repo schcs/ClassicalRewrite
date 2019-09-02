@@ -177,7 +177,7 @@ SmallerMatrix := function( G, g : Method := Method )
     */
         
     roots := RootElements( G );
-    
+
     // start the matrix with [1,0,...,0] in the first row
     mat := [ One( F ) ] cat [ 0 : i in [ 1..dim-1]];
     
@@ -190,7 +190,7 @@ SmallerMatrix := function( G, g : Method := Method )
     end if;
     
     for r in roots do 
-        
+
         vec := [ 0 ] cat 
                EntriesOfRootElement( G, r^g : Method := Method, 
                        GetWE1Entry := BBType( G ) eq "SU" and 
@@ -211,14 +211,14 @@ SmallerMatrix := function( G, g : Method := Method )
                     dim-wittdefect: 1, default: 0 >);
         end for;
     end if;
-            
+
     mat := MatrixAlgebra( F, dim )!mat;
     
     /*
       now we fix the problem of having T_{f1,alpha f_i} instead of 
       T_{f1,f_i} in SU in odd char
     */             
-                   
+
     if BBType( G ) eq "SU" and IsOdd( #F ) then
                
         for i in [ Floor( dim/2 )+1..dim-1-wittdefect] do
@@ -241,8 +241,8 @@ SmallerMatrix := function( G, g : Method := Method )
         end for;
         
     elif type eq "Sp" then
-        
-        sc := ScalarOfForm( type, dim, #F, mat[2], mat[dim-1] );
+
+        sc := ScalarOfForm( type, dim, #F, mat[2], mat[dim-1] ); 
         if not IsSquare( sc ) then
             return false, false, false;
         end if;
@@ -255,7 +255,7 @@ SmallerMatrix := function( G, g : Method := Method )
         end for;
         
         mat[dim] := sc*mat[dim];
-        
+
     elif type eq "SU" then
         
         if IsEven( dim ) then
@@ -345,11 +345,11 @@ SmallerMatrix := function( G, g : Method := Method )
     _, pr5 := ClassicalRewriteNatural( type, mat^0, mat );
 
     pr5 := Evaluate2( pr5, BBInverseGenerators( G ));
-    
     g0 := Evaluate( pr5, BBStandardGenerators( G ));
-    
+
     /* if g0 is not equal to g, then we try to modify it with a 
        diagonal element */
+    
     if g0 ne g then 
         
         // flag to see if found the right element modulo center
@@ -360,11 +360,15 @@ SmallerMatrix := function( G, g : Method := Method )
         // create the diagonal element    
         pd := DiagonalElement( type, dim, q0 );
         d := Evaluate( pd, G`StandardGenerators ); 
+        assert iscentral( d );
+
         exp := 1; 
         maxtry := case< type | 
                   "SL": GCD( dim, q-1 ), 
                   "SU": GCD( q0+1, dim ),
-                  default: q+1 mod 2 >;
+                  "Sp": 2,
+                  default: 2 >;
+        assert maxtry ge Order( d ); 
         repeat
             
             if not foundcentral and iscentral( g*g0^-1 ) then;
@@ -374,7 +378,7 @@ SmallerMatrix := function( G, g : Method := Method )
             
             g0 := g0*d;
             exp := exp+1;
-            
+
         until g0 eq g or exp ge maxtry;
         
         if g0 ne g and foundcentral then
