@@ -51,7 +51,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
       else 
           return G`SiegTrans[1];
       end if;
-      end if;  
+  end if;  
   
   F := BBField( G );
   d := BBDimension( G );

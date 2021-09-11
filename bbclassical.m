@@ -536,8 +536,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
        First we need to decorate G with some attributes that describe
        it as a classical group                        
     */
-      
-
+    
     type := BBType( G );
     gens := BBStandardGenerators( G );
 

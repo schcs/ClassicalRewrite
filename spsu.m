@@ -339,7 +339,7 @@ ClearFirstRowSpSUBB := function( G, g : FirstCall := false )
         while IsZeroEntry( G, g*S ) do
             c := c+1;
             if c gt dim-1 then
-                return false, false;
+                return false, false, false, false;
             end if;
             if c eq Floor( dim/2 ) then
                 CONJ := S1;
@@ -370,7 +370,7 @@ ClearFirstRowSpSUBB := function( G, g : FirstCall := false )
     end if;
 
     prog, z := ClearTopRightEntryBB( G, g );
-    if Category( prog ) eq BoolElt then return false, false, 1; end if;
+    if Category( prog ) eq BoolElt then return false, false, false, 1; end if;
     progR := progR*prog;
     g := g*z;
     
@@ -391,7 +391,7 @@ ClearFirstRowSpSUBB := function( G, g : FirstCall := false )
     
     while not IsZeroEntry( G, g*Q1*V^-1 ) do
         if c gt q then
-            return false, false, 2;
+            return false, false, false, 2;
         end if;
         c := c+1;
         Q1 := Q1^DD;
@@ -401,7 +401,7 @@ ClearFirstRowSpSUBB := function( G, g : FirstCall := false )
                            OffSet := -c, 
 			   GetLastEntry := true, 
                            GetWE1Entry := IsOdd( dim ));
-    if Category( list ) eq BoolElt then return false, false, 3; end if;
+    if Category( list ) eq BoolElt then return false, false, false, 3; end if;
     prog1 := SiegelTransformToSLP( G, list );
 
     if list[dim-1-dim mod 2] eq 0 then
