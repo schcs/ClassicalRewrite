@@ -34,7 +34,7 @@ Clear21EntrySU32 := function( G, g )
          return B.4^a[1]*B.6^a[2], X1^a[1]*X2^a[2];
      end if;
      
-     return false;
+     return false, _;
  end function;
      
               
@@ -104,7 +104,7 @@ Clear21EntryDim3 := function( G, g )
         
     end for;
     
-    return false, false;
+    return false, false, _;
 end function;
     
 
@@ -242,7 +242,7 @@ ClearFirstRowSUBBDim3 := function( G, g : FirstCall := false )
         progR := One( B );
     else
         p, z := Clear21EntryDim3( G, g );
-        if Category( p ) eq BoolElt then return false, false; end if;
+        if Category( p ) eq BoolElt then return false, false, _, _; end if;
         g := g*z;
         progR := p; 
     end if;
@@ -261,7 +261,7 @@ ClearFirstRowSUBBDim3 := function( G, g : FirstCall := false )
     elif Q^(Q^g) ne Q then
         c := 0;
         while Q^(Q^(g*T1)) ne Q do
-            if c gt q then return false, false; end if;
+            if c gt q then return false, false, _, _; end if;
             c := c+1;
             if IsOdd( q ) then
                 T1 := T1^Y;

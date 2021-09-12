@@ -63,7 +63,7 @@ EntriesOfRootElementBBSL := function( G, x : GetLastEntry := true )
         m := ( x, xin[1][i] ); 
         if m ne One( G ) then
             k := ConjugateXByDUntilZ( G, T1, D^-1, m ); 
-            if Category( k ) eq BoolElt then return false, false; end if;
+            if Category( k ) eq BoolElt then return false; end if;
             Append( ~vec, zz^k );
         else
             Append( ~vec, GF( q )!0 );
@@ -80,7 +80,7 @@ EntriesOfRootElementBBSL := function( G, x : GetLastEntry := true )
         Append( ~vec, GF( q )!0 );
     else
        k := ConjugateXByDUntilZ( G, T1, D^-1, m );
-       if Category( k ) eq BoolElt then return false, false; end if;
+       if Category( k ) eq BoolElt then return false; end if;
         Append( ~vec, zz^k );
     end if;    
         

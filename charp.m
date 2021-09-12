@@ -9,7 +9,6 @@ BBDimension, BBGenerators;
 import "subgroups.m":SLPToSiegelTrans, StabilizerOfE1;
 import "elements.m": ConjugateClassicalStandardToMyBasis, RootElements;
 
-
 /*
   This is the first step of the rewriting process. The is an element
   g in G. The output is x such that gx stabilizes <e1>.

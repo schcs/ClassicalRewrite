@@ -154,7 +154,7 @@ QMeet:= function( G, x : Transpose := false )
     // stabilizer of <e_2,...,f_1> ). we find this r
     
     if not exists(r){ r : r in [1..dim-2] | not isnormQ( roots[r]^x^-1 ) } then
-        return false, 1;
+        return false;
     end if;
 
     // Z will be the group of elements t_{v} where v = alpha b_r
@@ -191,7 +191,7 @@ QMeet:= function( G, x : Transpose := false )
             if exists(u){ u : u in Z | isnormQ( (y*u)^x^-1) } then
                 Agens := Agens join {@ y*u @}; 
             else
-	      return false, 2, Z, y; 
+	      return false; 
             end if; 
         end for;
     end if;
@@ -208,7 +208,7 @@ QMeet:= function( G, x : Transpose := false )
     // find some root element in rootsq1 that does not normalize Q
          
     if not exists(r){ r : r in [1..dim-2] | not isnormQ( rootsq1[r] ) } then
-        return false, 3;
+        return false;
     end if;
     
     // ZZ is a long root group in Q1 that does not normalize Q
@@ -226,7 +226,7 @@ QMeet:= function( G, x : Transpose := false )
     for i in rootsq1 do
         if i ne zz then
             if not exists(u){ u : u in ZZ | isnormQ( i*u ) } then
-                return false, Q, Q1, ZZ, i, 4;
+                return false;
             end if;
             
             normgens := normgens join {@ i*u @};
@@ -694,7 +694,6 @@ WriteSimpleRootElementAsSLPOmegaBB := function( G, x, pos )
         R1 := R1^D; R2 := R2^D;
     end for;
 
-    
 end function;
     
     // Clears the first row of g
@@ -785,7 +784,7 @@ w := QMeet( G, g : Transpose := true );
                                                       
     if not exists( u ){  u : u in sub< Universe( z ) | z > 
                | IsInH( G, g*u )} then
-        return false, 1;
+        return false, _, _, _;
     end if;
     
     // finally we write this u as SLP in the gens

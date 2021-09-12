@@ -147,7 +147,7 @@ EntriesOfRootElementBBSpSU := function( G, g :
             R := R0;
             repeat
                 if c gt q-2 then
-                    return false, false;
+                    return false;
                 end if;
                 R := R^DD; c := c+1;
             until C eq R;
@@ -238,7 +238,7 @@ EntriesOfRootElementBBSpSU := function( G, g :
             
         end for;
         
-        if not found then return false, false; end if;
+        if not found then return false; end if;
         
         Append( ~list, aw*z^OffSet );        
         _, b1 := Tf1aw( G, aw*z^OffSet );

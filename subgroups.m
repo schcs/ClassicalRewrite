@@ -35,7 +35,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
           return G`SiegTransTranspose[1], G`SiegTransTranspose[2],
                  G`SiegTransTranspose[3];
       else 
-          return G`SiegTransTranspose[1];
+          return G`SiegTransTranspose[1], _, _;
       end if;
   end if;         
       
@@ -49,7 +49,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
       elif EvaluateSLPs then
           return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
       else 
-          return G`SiegTrans[1];
+          return G`SiegTrans[1], _, _;
       end if;
   end if;  
   
@@ -71,7 +71,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
   elif <type,d,q> eq <"SU",3,4> then
       slps := [B.8,B.10,B.3];
       G`SiegTrans := <slps>;
-      return G`SiegTrans[1];
+      return G`SiegTrans[1], _, _;
   end if;
         
   // set up the beginning of the SLP
@@ -155,7 +155,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
                  G`SiegTransTranspose[3];
       else
           G`SiegTransTranspose := <slps>; 
-          return G`SiegTransTranspose[1];
+          return G`SiegTransTranspose[1], _, _;
       end if;
   elif type eq "SL" then 
       if EvaluateSLPs then
@@ -164,7 +164,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
           return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
       else
           G`SiegTrans := <slps>; 
-          return G`SiegTrans[1];
+          return G`SiegTrans[1], _, _;
       end if;
   end if;
   
@@ -222,7 +222,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
               return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
           else
               G`SiegTrans := <slps>; 
-              return G`SiegTrans[1];
+              return G`SiegTrans[1]), _, _;
           end if;
   end if;
    
@@ -244,7 +244,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
            return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
        else
            G`SiegTrans:= < slps >;
-           return G`SiegTrans[1];
+           return G`SiegTrans[1], _, _;
        end if;
    end if; 
          
@@ -274,7 +274,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
           return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
        else
            G`SiegTrans := <slps>; 
-           return G`SiegTrans[1];
+           return G`SiegTrans[1]_, _;
        end if;
    end if;
   
@@ -294,7 +294,7 @@ SLPToSiegelTrans := function( G : EvaluateSLPs := false, Transpose := false )
       return G`SiegTrans[1], G`SiegTrans[2], G`SiegTrans[3];
   else
       G`SiegTrans := <slps>; 
-      return G`SiegTrans[1];
+      return G`SiegTrans[1], _, _;
   end if;
   
 end function;

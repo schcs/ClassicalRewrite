@@ -29,7 +29,7 @@ RootElements := function( G : Transpose := false )
     prgens, matgens := SLPToSiegelTrans( G : EvaluateSLPs := true ); 
 
     if type eq "SL" then
-        return [ matgens[x] : x in [1..(dim-2)*d+1 by d ]];
+        return [ matgens[x] : x in [1..(dim-2)*d+1 by d ]], _;
     elif type eq "Omega" or <type,IsOdd( dim )> eq <"SU", true > then 
         roots := [ matgens[x] : x in [1..(dim-4)*d+1 by d ]] cat 
                  [ matgens[ (dim-3)*d+1 ]];
@@ -231,9 +231,8 @@ X_ := function( type, dim, q )
   if IsEven( q ) then
       WX1 := WX1*((B.3^B.1)^B.2)^(B.7^B.2^2)*B.3;
       WX1 := WX1^(B.4^Round(q/2));
-  end if;    return WX1;
-    
-    
+  end if;    
+  
   return WX1;
 end function;
 
