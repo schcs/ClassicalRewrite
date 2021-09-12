@@ -385,7 +385,7 @@ intrinsic ClassicalRewrite( G::Grp, gens::SeqEnum,
      
     /* 
       choosing method
-    */
+    */ 
       
     if Method eq "choose" then 
 
